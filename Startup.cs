@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Http;
 
-namespace asp_dotnet_core_api_building
+namespace CityInfo.API 
 {
     public class Startup
     {
@@ -28,20 +28,15 @@ namespace asp_dotnet_core_api_building
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory LoggerFactor)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory LoggerFactory)
         {
-            LoggerFactor.AddConsole();
+            LoggerFactory.AddConsole();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.Run(async (context) => 
-            {
-                await context.Response.WriteAsync("Hello World");
-            });
-
+            app.UseStatusCodePages();
             app.UseMvc();
         }
     }

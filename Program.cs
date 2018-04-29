@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace asp_dotnet_core_api_building
+namespace CityInfo.API 
 {
     public class Program
     {
