@@ -16,17 +16,43 @@ namespace CityInfo.API
                 new CityDto {
                     Id = 1,
                     Name = "New York City",
-                    Description = "The Apple City"
+                    Description = "The Apple City",
+                    PointOfInterest = new List<PointOfInterestDto> {
+                        new PointOfInterestDto{
+                            Id = 1,
+                            Name = "Central Park",
+                            Description = "Most visited place in NY"
+                        }
+                    }
                 },
                 new CityDto {
                     Id = 2, 
                     Name = "Vancouver",
-                    Description = "Our First Home"
+                    Description = "Our First Home",
+                    PointOfInterest = new List<PointOfInterestDto> {
+                        new PointOfInterestDto{
+                            Id = 1,
+                            Name = "English Bay",
+                            Description = "A pretty beach near home"
+                        },
+                        new PointOfInterestDto{
+                            Id = 1,
+                            Name = "Costco",
+                            Description = "A place to buy food"
+                        }
+                    }
                 },
                 new CityDto {
                     Id = 3,
                     Name = "Zhanjiang",
-                    Description = "My Hometown"
+                    Description = "My Hometown",
+                    PointOfInterest = new List<PointOfInterestDto> {
+                        new PointOfInterestDto{
+                            Id = 1,
+                            Name = "Chang Da Change",
+                            Description = "A supermarket I used to hangout with my parents."
+                        }
+                    }
                 }
             };
         }
