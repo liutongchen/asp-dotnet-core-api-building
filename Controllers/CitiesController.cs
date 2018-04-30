@@ -8,6 +8,7 @@ namespace CityInfo.API.Controllers
 {
     [Route("api/cities")]
     public class CitiesController : Controller { // GET api/values
+        [HttpGet()]
         public IActionResult GetCities() {
             return Ok(CitiesDataStore.Current.Cities);
         }
