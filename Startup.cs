@@ -11,17 +11,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
+using CityInfo.API.Services;
 
 namespace CityInfo.API 
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public static IConfigurationRoot Configuration;
+        public Startup(IHostingEnvironment env) 
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true);
+            
+            Configuration = builder.Build();
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -30,12 +34,18 @@ namespace CityInfo.API
                .AddMvcOptions(o => o.OutputFormatters.Add(
                    new XmlDataContractSerializerOutputFormatter()
                ));
+#if DEBUG
+            services.AddTransient<IMaiService, LocalMailServices>();
+#else
+            services.AddTransient<IMaiService, CloudMailServices>():
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory LoggerFactory)
         {
             LoggerFactory.AddConsole();
+            LoggerFactory.AddDebug();
 
             if (env.IsDevelopment())
             {
