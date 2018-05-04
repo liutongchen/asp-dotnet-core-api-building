@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 using CityInfo.API.Services;
+using Microsoft.EntityFrameworkCore;
+using CityInfo.API.Entities;
 
 namespace CityInfo.API 
 {
@@ -39,13 +41,17 @@ namespace CityInfo.API
 #else
             services.AddTransient<IMaiService, CloudMailServices>():
 #endif
+            var connectionString = Startup.Configuration["connectionStrings:cityInfoDBConnectionString"];
+            services.AddDbContext<CityInfoContext>(o => o.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory LoggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory LoggerFactory,
+        CityInfoContext cityInfoContext)
         {
             LoggerFactory.AddConsole();
             LoggerFactory.AddDebug();
+            cityInfoContext.EnsureSeedDataForContext();
 
             if (env.IsDevelopment())
             {
